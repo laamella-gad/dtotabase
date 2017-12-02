@@ -4,7 +4,7 @@
 
     <groupId>com.laamella</groupId>
     <artifactId>dtotabase</artifactId>
-    <version>1.0</version>
+    <version>1.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
@@ -92,7 +92,7 @@
         <connection>scm:git:git@github.com:laamella-gad/dtotabase.git</connection>
         <developerConnection>scm:git:git@github.com:laamella-gad/dtotabase.git</developerConnection>
         <url>https://github.com/laamella-gad/dtotabase.git</url>
-        <tag>dtotabase-1.0</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <licenses>
