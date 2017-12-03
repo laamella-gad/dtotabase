@@ -35,7 +35,7 @@ addressTable.insert(address1, address2)
 #### Retrieve some data
 
 ```java
-List<Address> selected = addressTable.select(r -> r.number > 50);
+List<Address> selected = addressTable.select(r -> r.number > 50)
 ```
 This is the big advantage of Dtotabase:
 quickly select data in any way you like with just a simple lambda expression.
@@ -48,15 +48,15 @@ so why not return everything in insertion order?
 #### Update some data
 
 ```java
-List<Address> updated = addressTable.update(
+addressTable.update(
         address -> address.number > 50,
-        address -> address.number *= 2);
+        address -> address.number *= 2)
 ```
 
 #### Delete some data
 
 ```java
-List<Address> deleted = addressTable.delete(r -> r.name.contains("lane"));
+addressTable.delete(r -> r.name.contains("lane"))
 ```
 
 # Support
