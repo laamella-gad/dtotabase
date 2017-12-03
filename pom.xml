@@ -5,7 +5,6 @@
     <groupId>com.laamella</groupId>
     <artifactId>dtotabase</artifactId>
     <version>1.1-SNAPSHOT</version>
-    <packaging>pom</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
     <description>A very simple in memory database</description>
@@ -84,7 +83,7 @@
         <repository>
             <id>bintray-laamella-gad-com.laamella</id>
             <name>laamella-gad-com.laamella</name>
-            <url>https://api.bintray.com/maven/laamella-gad/com.laamella/dtotabase</url>
+            <url>https://api.bintray.com/maven/laamella-gad/com.laamella/dtotabase/;publish=1</url>
         </repository>
     </distributionManagement>
 
