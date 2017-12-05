@@ -23,10 +23,26 @@ public class DtoTable<T> implements Serializable {
     }
 
     /**
+     * Selects all rows from the table that match the where-predicate and order them.
+     */
+    public final List<T> select(Predicate<T> where, Comparator<T> orderBy) {
+        return rows.stream().filter(where).sorted(orderBy).collect(toList());
+    }
+
+    /**
      * Selects all rows from the table.
      */
     public final Set<T> select() {
         return new HashSet<>(rows);
+    }
+
+    /**
+     * Selects all rows from the table and order them.
+     */
+    public final List<T> select(Comparator<T> orderBy) {
+        final List<T> ordered = new ArrayList<>(rows);
+        ordered.sort(orderBy);
+        return ordered;
     }
 
     /**

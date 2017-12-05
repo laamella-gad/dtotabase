@@ -2,12 +2,15 @@ package com.laamella.dtotabase;
 
 import org.junit.Test;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
 import static com.laamella.dtotabase.TestUtil.assertContains;
 import static com.laamella.dtotabase.TestUtil.assertEmpty;
 import static java.util.Collections.singletonList;
+import static java.util.Comparator.comparing;
+import static java.util.Comparator.comparingInt;
 import static org.junit.Assert.assertEquals;
 
 class Address {
@@ -23,8 +26,9 @@ class Address {
 public class DtoTableTest {
     private final DtoTable<Address> addressTable = new DtoTable<>();
 
-    private final Address address1 = new Address("Groesbeekseweg", 200);
-    private final Address address2 = new Address("Amsterdamsestraatweg", 16);
+    private final Address address1 = new Address("Amsterdamsestraatweg", 200);
+    private final Address address2 = new Address("Groesbeekseweg", 16);
+    private final Address address3 = new Address("Haarlemmerweg", 500);
 
     @Test
     public void someInserts() {
@@ -55,6 +59,42 @@ public class DtoTableTest {
         Set<Address> selected = addressTable.select(r -> r.number > 50);
 
         assertContains(selected, address1);
+    }
+
+    @Test
+    public void selectAllRowsOrdered() {
+        addressTable.insert(address1);
+        addressTable.insert(address2);
+
+        List<Address> selected = addressTable.select(comparingInt(a -> a.number));
+
+        assertEquals(address2, selected.get(0));
+        assertEquals(address1, selected.get(1));
+    }
+
+    @Test
+    public void selectAllRowsOrderedAnotherWay() {
+        addressTable.insert(address1);
+        addressTable.insert(address2);
+
+        List<Address> selected = addressTable.select(comparing(a -> a.streetName));
+
+        assertEquals(address1, selected.get(0));
+        assertEquals(address2, selected.get(1));
+    }
+
+    @Test
+    public void selectSomeRowsOrdered() {
+        addressTable.insert(address1);
+        addressTable.insert(address2);
+        addressTable.insert(address3);
+
+        List<Address> selected = addressTable.select(
+                r -> r.number > 50, 
+                comparing(a -> a.streetName));
+
+        assertEquals(address1, selected.get(0));
+        assertEquals(address3, selected.get(1));
     }
 
     @Test
