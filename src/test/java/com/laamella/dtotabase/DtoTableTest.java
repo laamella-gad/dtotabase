@@ -2,7 +2,8 @@ package com.laamella.dtotabase;
 
 import org.junit.Test;
 
-import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 import static com.laamella.dtotabase.TestUtil.assertContains;
 import static com.laamella.dtotabase.TestUtil.assertEmpty;
@@ -13,7 +14,7 @@ class Address {
     String streetName;
     int number;
 
-    public Address(String streetName, int number) {
+    Address(String streetName, int number) {
         this.streetName = streetName;
         this.number = number;
     }
@@ -27,7 +28,7 @@ public class DtoTableTest {
 
     @Test
     public void someInserts() {
-        List<Address> selected = addressTable
+        Set<Address> selected = addressTable
                 .insert(address1)
                 .insert(address1, address2)
                 .insert(singletonList(address2))
@@ -41,7 +42,7 @@ public class DtoTableTest {
         addressTable.insert(address1);
         addressTable.insert(address2);
 
-        List<Address> selected = addressTable.select();
+        Set<Address> selected = addressTable.select();
 
         assertContains(selected, address1, address2);
     }
@@ -51,7 +52,7 @@ public class DtoTableTest {
         addressTable.insert(address1);
         addressTable.insert(address2);
 
-        List<Address> selected = addressTable.select(r -> r.number > 50);
+        Set<Address> selected = addressTable.select(r -> r.number > 50);
 
         assertContains(selected, address1);
     }
@@ -61,9 +62,9 @@ public class DtoTableTest {
         addressTable.insert(address1);
         addressTable.insert(address2);
 
-        List<Address> selected = addressTable.select(address1);
+        Optional<Address> selected = addressTable.select(address1);
 
-        assertContains(selected, address1);
+        assertEquals(selected.get(), address1);
     }
 
     @Test
@@ -71,7 +72,7 @@ public class DtoTableTest {
         addressTable.insert(address1);
         addressTable.insert(address2);
 
-        List<Address> deleted = addressTable.delete(r -> r.number > 50);
+        Set<Address> deleted = addressTable.delete(r -> r.number > 50);
 
         assertContains(deleted, address1);
         assertContains(addressTable.select(), address2);
@@ -82,9 +83,9 @@ public class DtoTableTest {
         addressTable.insert(address1);
         addressTable.insert(address2);
 
-        List<Address> deleted = addressTable.delete(address1);
+        Optional<Address> deleted = addressTable.delete(address1);
 
-        assertContains(deleted, address1);
+        assertEquals(deleted.get(), address1);
         assertContains(addressTable.select(), address2);
     }
 
@@ -93,7 +94,7 @@ public class DtoTableTest {
         addressTable.insert(address1);
         addressTable.insert(address2);
 
-        List<Address> deleted = addressTable.delete();
+        Set<Address> deleted = addressTable.delete();
 
         assertContains(deleted, address1, address2);
         assertEmpty(addressTable.select());
@@ -104,7 +105,7 @@ public class DtoTableTest {
         addressTable.insert(address1);
         addressTable.insert(address2);
 
-        List<Address> updated = addressTable.update(
+        Set<Address> updated = addressTable.update(
                 address -> address.number > 50,
                 address -> address.number *= 2);
 

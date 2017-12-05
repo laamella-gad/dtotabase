@@ -1,65 +1,64 @@
 package com.laamella.dtotabase;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toSet;
 
 /**
  * A simple all-Java in memory pretend database table.
  */
 public class DtoTable<T> implements Serializable {
-    private final List<T> rows = new ArrayList<>();
+    private final Set<T> rows = new HashSet<>();
 
     /**
      * Selects all rows from the table that match the where-predicate.
      */
-    public final List<T> select(Predicate<T> where) {
-        return rows.stream().filter(where).collect(toList());
+    public final Set<T> select(Predicate<T> where) {
+        return rows.stream().filter(where).collect(toSet());
     }
 
     /**
      * Selects all rows from the table.
      */
-    public final List<T> select() {
-        return new ArrayList<>(rows);
+    public final Set<T> select() {
+        return new HashSet<>(rows);
     }
 
     /**
-     * Selects all rows from the table that match the key by using "equals."
+     * Selects the row from the table that matches the key by using "equals."
      */
-    public final List<T> select(T key) {
-        return rows.stream().filter(key::equals).collect(toList());
+    public final Optional<T> select(T key) {
+        return rows.stream().filter(key::equals).findAny();
     }
 
     /**
      * Deletes all rows from the table that match the "where" predicate. Returns the deleted rows.
      */
-    public final List<T> delete(Predicate<T> where) {
-        final List<T> selected = select(where);
+    public final Set<T> delete(Predicate<T> where) {
+        final Set<T> selected = select(where);
         rows.removeAll(selected);
         return selected;
     }
 
     /**
-     * Deletes all rows from the table that match the "where" predicate. Returns the deleted rows.
+     * Deletes the row from the table that matches the "where" predicate. Returns the deleted row.
      */
-    public final List<T> delete(T where) {
-        final List<T> selected = select(where);
-        rows.removeAll(selected);
+    public final Optional<T> delete(T where) {
+        final Optional<T> selected = select(where);
+        selected.ifPresent(rows::remove);
         return selected;
     }
 
     /**
      * Deletes all rows from the table. Returns the deleted rows.
      */
-    public final List<T> delete() {
-        final List<T> deletedRows = new ArrayList<>(rows);
+    public final Set<T> delete() {
+        final Set<T> deletedRows = new HashSet<>(rows);
         rows.clear();
         return deletedRows;
     }
@@ -92,8 +91,8 @@ public class DtoTable<T> implements Serializable {
     /**
      * Calls the "update" consumer for each row that matches the "where" predicate. Returns the matched rows.
      */
-    public final List<T> update(Predicate<T> where, Consumer<T> update) {
-        final List<T> selected = select(where);
+    public final Set<T> update(Predicate<T> where, Consumer<T> update) {
+        final Set<T> selected = select(where);
         selected.forEach(update);
         return selected;
     }
