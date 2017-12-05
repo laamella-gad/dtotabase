@@ -1,8 +1,6 @@
 package com.laamella.dtotabase;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 import static java.util.Arrays.asList;
 import static org.junit.Assert.fail;
@@ -13,9 +11,8 @@ public class TestUtil {
     }
 
     @SafeVarargs
-    public static <T> void assertContains(Collection<T> result, T... expectedArg) {
-        Set<T> actual = new HashSet<>(result);
-        Set<T> expected = new HashSet<>(asList(expectedArg));
+    public static <T> void assertContains(Collection<T> result, T... expected) {
+        List<T> actual = new ArrayList<>(result);
 
         final StringBuilder out = new StringBuilder();
         for (T e : expected) {

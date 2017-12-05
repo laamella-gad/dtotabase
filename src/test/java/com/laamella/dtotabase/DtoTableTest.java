@@ -34,7 +34,7 @@ public class DtoTableTest {
                 .insert(singletonList(address2))
                 .select();
 
-        assertContains(selected, address1, address1, address2, address2);
+        assertContains(selected, address1, address2);
     }
 
     @Test

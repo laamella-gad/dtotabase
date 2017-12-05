@@ -32,18 +32,14 @@ Subclass it if you like to add more methods.
 addressTable.insert(address1, address2)
 ```
 
+Duplicates (objects which are `equals`) will be ignored
 #### Retrieve some data
 
 ```java
-List<Address> selected = addressTable.select(r -> r.number > 50)
+Set<Address> selected = addressTable.select(r -> r.number > 50)
 ```
 This is the big advantage of Dtotabase:
 quickly select data in any way you like with just a simple lambda expression.
-
-You get a list, not a set.
-Databases are known for returning data in an unpredictable order.
-Dtotabase internally stores all data in a list,
-so why not return everything in insertion order?
 
 #### Update some data
 
