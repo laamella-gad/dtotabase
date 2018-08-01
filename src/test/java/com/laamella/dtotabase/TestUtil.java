@@ -1,8 +1,9 @@
 package com.laamella.dtotabase;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
-import static java.util.Arrays.asList;
 import static org.junit.Assert.fail;
 
 public class TestUtil {
