@@ -1,6 +1,6 @@
 package com.laamella.dtotabase;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,7 +11,7 @@ import static com.laamella.dtotabase.TestUtil.assertEmpty;
 import static java.util.Collections.singletonList;
 import static java.util.Comparator.comparing;
 import static java.util.Comparator.comparingInt;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class Address {
     String streetName;
@@ -23,7 +23,7 @@ class Address {
     }
 }
 
-public class DtoTableTest {
+class DtoTableTest {
     private final DtoTable<Address> addressTable = new DtoTable<>();
 
     private final Address address1 = new Address("Amsterdamsestraatweg", 200);
@@ -31,7 +31,7 @@ public class DtoTableTest {
     private final Address address3 = new Address("Haarlemmerweg", 500);
 
     @Test
-    public void someInserts() {
+    void someInserts() {
         Set<Address> selected = addressTable
                 .insert(address1)
                 .insert(address1, address2)
@@ -42,7 +42,7 @@ public class DtoTableTest {
     }
 
     @Test
-    public void selectAllRows() {
+    void selectAllRows() {
         addressTable.insert(address1);
         addressTable.insert(address2);
 
@@ -52,7 +52,7 @@ public class DtoTableTest {
     }
 
     @Test
-    public void selectSomeRows() {
+    void selectSomeRows() {
         addressTable.insert(address1);
         addressTable.insert(address2);
 
@@ -62,7 +62,7 @@ public class DtoTableTest {
     }
 
     @Test
-    public void selectAllRowsOrdered() {
+    void selectAllRowsOrdered() {
         addressTable.insert(address1);
         addressTable.insert(address2);
 
@@ -73,7 +73,7 @@ public class DtoTableTest {
     }
 
     @Test
-    public void selectAllRowsOrderedAnotherWay() {
+    void selectAllRowsOrderedAnotherWay() {
         addressTable.insert(address1);
         addressTable.insert(address2);
 
@@ -84,7 +84,7 @@ public class DtoTableTest {
     }
 
     @Test
-    public void selectSomeRowsOrdered() {
+    void selectSomeRowsOrdered() {
         addressTable.insert(address1);
         addressTable.insert(address2);
         addressTable.insert(address3);
@@ -98,7 +98,7 @@ public class DtoTableTest {
     }
 
     @Test
-    public void selectRowByKey() {
+    void selectRowByKey() {
         addressTable.insert(address1);
         addressTable.insert(address2);
 
@@ -108,7 +108,7 @@ public class DtoTableTest {
     }
 
     @Test
-    public void deleteSomeRows() {
+    void deleteSomeRows() {
         addressTable.insert(address1);
         addressTable.insert(address2);
 
@@ -119,7 +119,7 @@ public class DtoTableTest {
     }
 
     @Test
-    public void deleteByKey() {
+    void deleteByKey() {
         addressTable.insert(address1);
         addressTable.insert(address2);
 
@@ -130,7 +130,7 @@ public class DtoTableTest {
     }
 
     @Test
-    public void deleteEverything() {
+    void deleteEverything() {
         addressTable.insert(address1);
         addressTable.insert(address2);
 
@@ -141,7 +141,7 @@ public class DtoTableTest {
     }
 
     @Test
-    public void updateRows() {
+    void updateRows() {
         addressTable.insert(address1);
         addressTable.insert(address2);
 
